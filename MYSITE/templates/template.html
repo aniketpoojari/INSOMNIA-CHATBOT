@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<style>
+.main{
+    margin: 0 auto;
+    width: 80%;
+    border: 2px solid #dedede;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 20px;
+}
+.chat{
+    border-radius: 5px;
+    height: 500px;
+    overflow-y: auto;
+    padding:10px;
+    background-color: #eff8fc;
+    color: #fff;
+}
+.container {
+  border: 2px solid #6ba32a;
+  background-color: #8bc34a;
+  border-radius: 20px;
+  padding: 10px;
+  margin: 10px 0;
+  word-wrap: break-word;
+  width: 70%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transition: transform .2s;
+}
+
+.darker {
+  border: 2px solid #01377b;
+  margin-left: auto;
+  background-color: #01579b;
+  text-align: right;
+}
+
+.container::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.container:hover{
+  transform: scale(0.9);
+}
+
+.input{
+  margin-top: 10px;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #efebe9;
+}
+#textField{
+  width:85%;
+  height: 35px;
+  background-color: #f7f7f7;
+  border-radius: 15px;
+  font-size: 20px;
+  padding-left: 5px;
+  padding-bottom: 5px;
+}
+p{
+  margin: 0;
+}
+</style>
+</head>
+<body>
+
+<div class="main">
+  <div class="chat" id="chat">
+    <div class="container">
+      <p>BOT</p>
+      <p>Welcome</p>
+    </div>
+  </div>
+    <div class="input">
+      <input type="text" id = "textField" placeholder="Type your query here...">
+      <button type="button" class="btn btn-outline-success" onclick="send()">send</button>
+      <button type="button" class="btn btn-outline-warning" onclick="record()">record</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+  var chatdiv = document.getElementById("chat");
+
+  var textField = document.getElementById("textField")
+
+  var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+  var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
+  var grammar = '#JSGF V1.0;'
+  var recognition = new SpeechRecognition();
+  var speechRecognitionList = new SpeechGrammarList();
+  speechRecognitionList.addFromString(grammar, 1);
+  recognition.grammars = speechRecognitionList;
+  recognition.lang = 'en-US';
+  recognition.interimResults = false;
+  
+  recognition.onresult = function(event) {
+    var last = event.results.length - 1;
+    var command = event.results[last][0].transcript;
+    textField.value = command;   
+  };
+
+  recognition.onspeechend = function() {
+    recognition.stop();
+  };
+
+  recognition.onerror = function(event) {
+    textField.value = 'Error occurred in recognition: ' + event.error;
+  }
+
+  function record() {
+    recognition.start();
+  }
+
+
+  function send(){
+    var text= textField.value;
+    if(text != ""){
+      document.getElementById("textField").value = "";
+      var div_o = document.createElement("DIV");
+      div_o.classList.add("container","darker");
+      var p1 = document.createElement("P");
+      p1.innerHTML ="YOU";
+      var p2 = document.createElement("P");
+      p2.innerHTML = text;
+      div_o.appendChild(p1)
+      div_o.appendChild(p2)
+      chatdiv.appendChild(div_o)
+      chatdiv.scrollTop = chatdiv.scrollHeight;
+      $.ajax({url: "result/"+text, success: function(result){
+              
+              var div_r = document.createElement("DIV");
+              div_r.classList.add("container");
+              
+              var p3 = document.createElement("P");
+              p3.innerHTML = "BOT";
+              div_r.appendChild(p3)
+
+              if(result.intent === '9'){
+                var p4 = document.createElement("A");
+                p4.href = result.text
+                p4.innerHTML = result.text
+              } else if(result.intent === '10'){
+                  var p4 = document.createElement("iframe");
+                  p4.setAttribute("src", result.text);
+                  p4.setAttribute("width", "600px");
+                  p4.setAttribute("height", "400px");
+                  p4.setAttribute("allow", "encrypted-media");
+                  
+              } else if(result.intent === '11.5'){
+                  var p4 = document.createElement("img");
+                  p4.setAttribute("src", result.text);
+                  p4.setAttribute("height", "300px");
+                  p4.setAttribute("width", "600px");
+              } else if(result.intent === '-1'){
+                var p4 = document.createElement("P");
+                p4.innerHTML = result.text;
+              }
+               else {
+                var p4 = document.createElement("P");
+                p4.innerHTML = result.text;
+              }
+
+              div_r.appendChild(p4)
+              chatdiv.appendChild(div_r)
+              chatdiv.scrollTop = chatdiv.scrollHeight;
+      }});
+    }
+  }
+
+  textField.addEventListener("keyup", function(event) {
+  // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+    // Cancel the default action, if needed
+    event.preventDefault();
+    // Trigger the button element with a click
+    send()
+  }
+});
+</script>
+
+</body>
+</html>

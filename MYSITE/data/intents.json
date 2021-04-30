@@ -1,0 +1,90 @@
+{
+    "intents": [
+        {
+            "tag": "greeting",
+            "patterns": ["Hi", "How are you", "Is anyone there?", "Hello", "Good day"],
+            "responses": ["Hello, thanks for visiting", "Good to see you again", "Hi there, how can I help?"]
+        },
+        {
+            "tag": "goodbye",
+            "patterns": ["Bye", "See you later", "Goodbye", "cya"],
+            "responses": ["See you later, thanks for visiting", "Have a nice day", "Bye! Come back again soon."]
+        },
+        {
+            "tag": "thanks",
+            "patterns": ["Thanks", "Thank you", "Thats helpful"],
+            "responses": ["Happy to help!", "Any time!", "My pleasure"]
+        },
+	    {
+            "tag": "1",
+            "patterns": ["Im bored", "Entertain me", "I feel bored"],
+            "responses": [
+                "Boredom doesnt stand a chance against us! We can play some games, I can try to make you laugh, or I can surprise you with some random fun."
+            ]
+        },
+	    {
+            "tag": "2",
+            "patterns": ["Do you ever get tired?", "Are you tired?", "you tired"],
+            "responses": [
+                "I dont exactly need to grab 40 winks, but I suppose this device does need to be plugged in occasionally.",
+                "Naah! Its fun talking to you, but you shoul try to sleep"
+            ]
+        },
+	    {
+            "tag": "3",
+            "patterns": ["How old are you?", "Whats you age?"],
+            "responses": ["I was launched in 2016, so Im still fairly young. But I’ve learned so much! I hope Im wise beyond my years."] 
+        },
+	    {
+            "tag": "4",
+            "patterns": ["Do you have an imagination?"],
+            "responses": ["Im imagining what it would be like to evaporate like water does."]
+        },
+	    {
+            "tag": "5",
+            "patterns": ["Can you rap?"],
+            "responses": ["I can drop a beat.", "bhuv bhuv chik chik"]
+        },
+	    {
+            "tag": "6",
+            "patterns": ["What are you wearing?"],
+            "responses": ["Just some bits and bobs."]
+        },
+	    {
+            "tag": "7",
+            "patterns": ["When is your birthday?", "your birthday"],
+            "responses": ["Its hard to remember, I was very young at the time."]
+        },
+	    {
+            "tag": "8",
+            "patterns": ["What is the loneliest number?"],
+            "responses": ["One is the loneliest number that youll ever do."]
+        },
+	    {
+            "tag": "9",
+            "patterns": ["I want to play online games", "online games", "games"],
+            "responses": [
+                "https://www.arkadium.com/free-online-games/", 
+                "https://www.kiloo.com/en/kids-games/", 
+                "https://www.miniclip.com/games/genre-2/multiplayer/en/"
+            ]
+        },
+        {
+            "tag": "10",
+            "patterns": ["show me some video on?", "video on?", "show video on", "vidoes"],
+            "responses": [
+                "showing video on"
+            ]
+        },
+        {
+            "tag": "11",
+            "patterns": ["joke", "tell me a joke"],
+            "responses": ["joke"]
+        },
+        {
+            "tag": "12",
+            "patterns": ["meme", "show me a meme"],
+            "responses": ["meme"]
+        }  
+   ]
+}
